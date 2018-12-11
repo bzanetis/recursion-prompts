@@ -6,33 +6,182 @@
 // denoted by n!, is the product of all positive integers less than or equal to n.
 // Example: 5! = 5 x 4 x 3 x 2 x 1 = 120
 // factorial(5); // 120
+// input - number
+// output - number
+//
+// strategy - take in a number, create sum  = number x number decrementing by 1 x  number result decrementing by 1 ...  - > reach 0
+// 
+// 5 = 
+// 5
+// 5 x 4
+// 5 x 4 x 3
+// .....
+// 5 x 4 x 3 x 2 x 1 = 120
+//
+// 
+// base case - if n < 1 ; - dont want it to hit 0;
+// recursive line - return n * factorial(n - 1), 
+
 var factorial = function(n) {
+
+	if ( n < 0) {
+		return null;
+	}
+	if ( n < 2){
+		return 1;
+	}
+	return (n * factorial(n - 1))	
 };
+
 
 // 2. Compute the sum of an array of integers.
 // sum([1,2,3,4,5,6]); // 21
+// input: array of nums
+// output: num --> sum of array values 
+// strategy: take every num in the array & add it together
+// look at the length of the array & base case should be once we reach end of array
+// base case:  i = array.length - 1
+// recursive line: array[i] + sum(i + 1)
+// val 1, index 0
+// val 2, index 1
+// ...
+// val 6, index 5
+//[1,2,3,4] - 1
+//[2,3,4] - 2
+//[3,4] - 3
+// [4] - 4
+// 4 + 3 + 2 + 1 = val
+
+
+
+
 var sum = function(array) {
+
+	var value = array[0];
+	if(array.length === 0){
+		return 0;
+	}
+	if (array.length > 0) {
+		var newArray = array.slice(1)
+	}
+	return (value + sum(newArray));
 };
+
 
 // 3. Sum all numbers in an array containing nested arrays.
 // arraySum([1,[2,3],[[4]],5]); // 15
+// - note - flatten the array - //
+
+// input - array of nested arrays
+// output - number - sum of the array
+// strategy - flatten array, use our sum array strategy above; 
+//
+//
+
 var arraySum = function(array) {
+
+    var newArray = array.flat(array.length);
+    if(newArray.length === 0){
+		return 0;
+	}
+	var value = newArray[0]; 
+	if (newArray.length > 0) {
+		var newArray = newArray.slice(1)
+	}
+	return (value + arraySum(newArray));
 };
 
+
+
 // 4. Check if a number is even.
+// input: number
+// output: boolean
+// strategy: take the n and divide by two. Check if the number is equal to zero, if not - continue to divide by 2.
+//(5) - 2 = 3
+//3 - 2 = 1 negative
+
+// 6 - 2 = 4
+// 4 - 2 = 2
+// 2 - 2 = 0
+
+
+//2.5 / 2 = 1.25 - small then 2 bigger than 1 false
+//(7) / 2 = 3.5
+//(3.5) / 2 = 1.75 smaller then 2 bigger that 1 false
+
+//(10) / 2 = 5
+//(5) / 2 = 2.5
+
+//(8) / 2 = 4
+//(4) / 2 = 2
+
+//(6) / 2 = 3
+
+//(4) / 2 = 2
+//(2) / 2 = 1 - equal to 1 = true
+
 var isEven = function(n) {
+  if (n === 1) {
+  	return false;
+  }
+  if (n === 0) {
+  	return true; 
+  }
+  if (n < 0) {
+  	return isEven(n + 2); 
+  }
+  return isEven(n - 2);
 };
 
 // 5. Sum all integers below a given integer.
 // sumBelow(10); // 45
 // sumBelow(7); // 21
+// input - number
+// output - number - sum of array of numbers
+// strategy - 9 8 7 6 5 4 3 2 1 
+// run amount of time number - 1
+// 10 - 1
+// 9 - 1
+// 8 - 1
+//
 var sumBelow = function(n) {
+    if(n === 0) {
+      return 0;
+	}
+	if(n < 0) {
+	  return ((n + 1) + sumBelow(n+1));
+	}
+    return ((n - 1) + sumBelow(n - 1)); 
 };
 
 // 6. Get the integers within a range (x, y).
 // range(2,9); // [3,4,5,6,7,8]
+// input - 2 numbers
+// output - array of a range of numbers
+// strategy - strating point (x) and end point (y) push numbers into a new list
+// return the new list created
+// note - recursive statement x + 1 or y - 1
+// note - recrisive statment create the array
+// range(2,5)
+// x 2         x 2 y  5
+// x + 1 = 3   x 3 y  5
+// x + 1 = 4   x 4 y  5
+// x + 1 = 5   x 5 y  5 - end
+
 var range = function(x, y) {
+  var newArray = [x];
+    if (x === y){
+	    newArray.slice(1,newArray.length - 1)
+	    //newArray.shift()
+		return newArray;
+	}
+   for(var i = x; i < y; i++){
+      x ++;
+	  return newArray.concat(range(x,y))
+    }
 };
+
+range(2,8)
 
 // 7. Compute the exponent of a number.
 // The exponent of a number says how many times the base number is used as a factor.
