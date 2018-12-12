@@ -145,43 +145,34 @@ var isEven = function(n) {
 // 8 - 1
 //
 var sumBelow = function(n) {
-    if(n === 0) {
-      return 0;
-	}
-	if(n < 0) {
-	  return ((n + 1) + sumBelow(n+1));
-	}
-    return ((n - 1) + sumBelow(n - 1)); 
+  if(n === 0) {
+    return 0;
+  }
+  if(n < 0) {
+	return ((n + 1) + sumBelow(n+1));
+  }
+  return ((n - 1) + sumBelow(n - 1)); 
 };
 
 // 6. Get the integers within a range (x, y).
 // range(2,9); // [3,4,5,6,7,8]
 // input - 2 numbers
 // output - array of a range of numbers
-// strategy - strating point (x) and end point (y) push numbers into a new list
-// return the new list created
-// note - recursive statement x + 1 or y - 1
-// note - recrisive statment create the array
-// range(2,5)
-// x 2         x 2 y  5
-// x + 1 = 3   x 3 y  5
-// x + 1 = 4   x 4 y  5
-// x + 1 = 5   x 5 y  5 - end
+//return an array
+//the length will be (y-x)-1
+//if y-x === 1, return [];
+//if y-x === 2, return array of 1 element, (y-1)
+//else range is array of 1 element plus the range(x+1, y)
 
 var range = function(x, y) {
-  var newArray = [x];
-    if (x === y){
-	    newArray.slice(1,newArray.length - 1)
-	    //newArray.shift()
-		return newArray;
+	if ((y - x) === 1) {
+		return [];
+  } else if ((y - x) === 2) {
+    return [y - 1]; 
+	} else {
+		return [x + 1].concat(range((x + 1), y))  
 	}
-   for(var i = x; i < y; i++){
-      x ++;
-	  return newArray.concat(range(x,y))
-    }
 };
-
-range(2,8)
 
 // 7. Compute the exponent of a number.
 // The exponent of a number says how many times the base number is used as a factor.
@@ -189,6 +180,14 @@ range(2,8)
 // exponent(4,3); // 64
 // https://www.khanacademy.org/computing/computer-science/algorithms/recursive-algorithms/a/computing-powers-of-a-number
 var exponent = function(base, exp) {
+  if (exp === 0){
+    return 1;
+  }
+  if (exp > 0){
+    return base * exponent(base, exp -1) //8
+  } else if (exp < 0){
+    return 1 / (exponent(base, -exp))
+  }  
 };
 
 // 8. Determine if a number is a power of two.
@@ -196,15 +195,37 @@ var exponent = function(base, exp) {
 // powerOfTwo(16); // true
 // powerOfTwo(10); // false
 var powerOfTwo = function(n) {
+  if (n === 1){
+    return true;
+  }else if (n === 0){
+    return false;
+  }
+ return powerOfTwo(n / 2) 
 };
 
 // 9. Write a function that reverses a string.
 var reverse = function(string) {
+  var newString = "";
+  if (string.length < 1){
+    return newString; 
+  }
+ 
+  return newString += string[string.length - 1] + reverse(string.slice(0, -1));
 };
 
 // 10. Write a function that determines if a string is a palindrome.
 var palindrome = function(string) {
+  string = string.replace(/\s/g, '')
+  string = string.toLowerCase();
+  if (string.length <= 1) {
+    return true; //a base case
+  }
+  if (string[string.length - 1] !== string[0]) {
+    return false; //a base case 
+  }
+  return palindrome(string.slice(1, -1))
 };
+
 
 // 11. Write a function that returns the remainder of x divided by y without using the
 // modulo (%) operator.
