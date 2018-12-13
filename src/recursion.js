@@ -225,8 +225,32 @@ var modulo = function(x, y) {
 
 // 12. Write a function that multiplies two numbers without using the * operator or
 // Math methods.
+//(2, 3) //6
+// 2 + 2 , 2(x + x until y = 1 while y -1) 
+//  + 2, 1  -> exits & = 6
+// (3, 4)
+// 3 + 3, 3
+// + 3, 2
+// + 3, 1 _> exits & = 12
+// (3, 6)
+// 3 + 3, 5
+// + 3, 4
+// + 3, 3
+// + 3, 2
+// + 3, 1 -> exits & = 18
 var multiply = function(x, y) {
+    if (x == 0 || y == 0) {
+      return 0;
+    } else if (y > 0) {
+      return x + multiply(x, y - 1);
+    } else if (y < 0) {
+      return -multiply(x, -y);
+    } else {
+      return -1;
+    }
 };
+
+
 
 // 13. Write a function that divides two numbers without using the / operator or
 // Math methods to arrive at an approximate quotient (ignore decimal endings).
@@ -351,6 +375,7 @@ var nestedEvenSum = function(obj) {
 // 30. Flatten an array containing nested arrays.
 // flatten([1,[2],[3,[[4]]],5]); // [1,2,3,4,5]
 var flatten = function(array) {
+
 };
 
 // 31. Given a string, return an object containing tallies of each letter.
@@ -417,4 +442,12 @@ var mergeSort = function(array) {
 // console.log(obj2); // {a:1,b:{bb:{bbb:2}},c:3}
 // obj1 === obj2 // false
 var clone = function(input) {
+  for (var i = 0; i < input.length; i++) {
+    if (Array.isArray(input[i])) {
+      return array.flat(clone(input[i]));
+    }
+    if (typeof input[i] === 'number') {
+      return input[i];
+    }
+  }
 };
