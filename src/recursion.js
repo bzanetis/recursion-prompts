@@ -6,18 +6,6 @@
 // denoted by n!, is the product of all positive integers less than or equal to n.
 // Example: 5! = 5 x 4 x 3 x 2 x 1 = 120
 // factorial(5); // 120
-// input - number
-// output - number
-//
-// strategy - take in a number, create sum  = number x number decrementing by 1 x  number result decrementing by 1 ...  - > reach 0
-// 
-// 5 = 
-// 5
-// 5 x 4
-// 5 x 4 x 3
-// .....
-// 5 x 4 x 3 x 2 x 1 = 120
-//
 // 
 // base case - if n < 1 ; - dont want it to hit 0;
 // recursive line - return n * factorial(n - 1), 
@@ -53,8 +41,6 @@ var factorial = function(n) {
 // 4 + 3 + 2 + 1 = val
 
 
-
-
 var sum = function(array) {
 
 	var value = array[0];
@@ -79,19 +65,16 @@ var sum = function(array) {
 //
 
 var arraySum = function(array) {
-
-    var newArray = array.flat(array.length);
+  var newArray = array.flat(array.length);
     if(newArray.length === 0){
 		return 0;
-	}
+    }
 	var value = newArray[0]; 
 	if (newArray.length > 0) {
 		var newArray = newArray.slice(1)
 	}
 	return (value + arraySum(newArray));
 };
-
-
 
 // 4. Check if a number is even.
 // input: number
@@ -100,25 +83,6 @@ var arraySum = function(array) {
 //(5) - 2 = 3
 //3 - 2 = 1 negative
 
-// 6 - 2 = 4
-// 4 - 2 = 2
-// 2 - 2 = 0
-
-
-//2.5 / 2 = 1.25 - small then 2 bigger than 1 false
-//(7) / 2 = 3.5
-//(3.5) / 2 = 1.75 smaller then 2 bigger that 1 false
-
-//(10) / 2 = 5
-//(5) / 2 = 2.5
-
-//(8) / 2 = 4
-//(4) / 2 = 2
-
-//(6) / 2 = 3
-
-//(4) / 2 = 2
-//(2) / 2 = 1 - equal to 1 = true
 
 var isEven = function(n) {
   if (n === 1) {
@@ -165,13 +129,19 @@ var sumBelow = function(n) {
 //else range is array of 1 element plus the range(x+1, y)
 
 var range = function(x, y) {
-	if ((y - x) === 1) {
-		return [];
+  if ((y - x) === 1 || x - y === 1 || x === y) {
+    return [];
   } else if ((y - x) === 2) {
     return [y - 1]; 
-	} else {
-		return [x + 1].concat(range((x + 1), y))  
-	}
+  } else if ((x - y) === 2) {
+    return [x - 1]; 
+  }
+  if (y > x){
+    return [x + 1].concat(range((x + 1), y))  
+  }
+  if (x > y) {
+    return (range((x), y + 1)).concat([y + 1])
+  }
 };
 
 // 7. Compute the exponent of a number.
@@ -233,6 +203,24 @@ var palindrome = function(string) {
 // modulo(17,5) // 2
 // modulo(22,6) // 4
 var modulo = function(x, y) {
+
+  if (y === 0){
+    return NaN
+  }
+  if (x === 0){
+    return 0;
+  }  
+  if (y > x ){
+    return  x 
+  }  
+  if (x - y === y){
+    return 0;
+  }
+
+  if (x - y < y){
+    return x - y 
+  }
+  return modulo(x - y, y)
 };
 
 // 12. Write a function that multiplies two numbers without using the * operator or
@@ -273,7 +261,15 @@ var reverseArr = function(array) {
 // buildList(0,5) // [0,0,0,0,0]
 // buildList(7,3) // [7,7,7]
 var buildList = function(value, length) {
+  var arr = [];
+  if (length === 0) {
+    return [];
+  } else if (length > 0) {
+    arr.push(value);
+  }
+  return arr.concat(buildList(value, length - 1))
 };
+
 
 // 19. Implement FizzBuzz. Given integer n, return an array of the string representations of 1 to n.
 // For multiples of three, output 'Fizz' instead of the number.
